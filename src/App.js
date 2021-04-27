@@ -6,6 +6,7 @@ import "./App.css";
 
 function App() {
   const [countries, setcountries] = useState([]);
+  const [country, setcountry] = useState("worldwide");
 
   useEffect(() => {
     const getCountriesData = async() => {
@@ -22,6 +23,11 @@ function App() {
     getCountriesData();
   }, []);
 
+  const onCountryChange = (event) => {
+    const countrycode = event.target.value;
+    setcountry(countrycode);
+  }
+
   return (
     <div className="app">
       <div className="app__header">
@@ -30,7 +36,8 @@ function App() {
           <h6>a initiave by cwm</h6>
         </div>
         <FormControl className="app__dropdown">
-          <Select variant="outlined" value="abc">
+          <Select variant="outlined"  onChange={onCountryChange} value={country}>
+            <MenuItem value="worldwide">World Wide</MenuItem>
             {countries.map((country) => (
               <MenuItem value={country.value}>{country.name}</MenuItem>
             ))}

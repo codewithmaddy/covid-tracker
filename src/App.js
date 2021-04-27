@@ -10,7 +10,8 @@ import "./App.css";
 import InfoBox from "./InfoBox";
 import Map from "./Map";
 import Table from "./Table";
-import {sortData} from "./Util.js";
+import { sortData } from "./Util.js";
+import LineGraph from "./LineGraphs.js";
 
 // https://disease.sh/v3/covid-19/countries
 
@@ -40,12 +41,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetch( "https://disease.sh/v3/covid-19/all")
-    .then(response => response.json())
-    .then(data => {
-      setCountryInfo(data);
-    })
-  }, [])
+    fetch("https://disease.sh/v3/covid-19/all")
+      .then((response) => response.json())
+      .then((data) => {
+        setCountryInfo(data);
+      });
+  }, []);
 
   const onCountryChange = (event) => {
     const countrycode = event.target.value;
@@ -90,16 +91,16 @@ function App() {
             cases={countryInfo.todayCases}
             total={countryInfo.cases}
           ></InfoBox>
-          <InfoBox 
-          title="Recovered" 
-          cases={countryInfo.todayRecovered} 
-          total={countryInfo.recovered}>
-          </InfoBox>
-          <InfoBox 
-          title="Deaths" 
-          cases={countryInfo.todayDeaths} 
-          total={countryInfo.deaths}>
-          </InfoBox>
+          <InfoBox
+            title="Recovered"
+            cases={countryInfo.todayRecovered}
+            total={countryInfo.recovered}
+          ></InfoBox>
+          <InfoBox
+            title="Deaths"
+            cases={countryInfo.todayDeaths}
+            total={countryInfo.deaths}
+          ></InfoBox>
         </div>
         <Map></Map>
       </div>
@@ -109,6 +110,7 @@ function App() {
             <h3>Live Cases By Country</h3>
             <Table countries={tableData}></Table>
             <h3>World Wide new cases</h3>
+            <LineGraph></LineGraph>
           </CardContent>
         </Card>
       </div>

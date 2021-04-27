@@ -5,8 +5,11 @@ function App() {
   return (
     <div className="app">
       <div className="app__header">
-        <h1>Covid Tracker</h1>
-        <FormControl className="app__dropdown">
+        <div>
+          <h1>Covid Tracker</h1>
+          <h6>a initiave by cwm</h6>
+        </div>
+          <FormControl className="app__dropdown">
           <Select variant="outlined" value="abc">
             <MenuItem value="worldwide">worldwide</MenuItem>
             <MenuItem value="option 2">option 2</MenuItem>

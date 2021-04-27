@@ -10,6 +10,7 @@ import "./App.css";
 import InfoBox from "./InfoBox";
 import Map from "./Map";
 import Table from "./Table";
+import {sortData} from "./Util.js";
 
 // https://disease.sh/v3/covid-19/countries
 
@@ -17,7 +18,7 @@ function App() {
   const [countries, setcountries] = useState([]);
   const [country, setcountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
-  const [tableData, setTableData] = useState({});
+  const [tableData, setTableData] = useState([]);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -28,7 +29,10 @@ function App() {
             name: country.country,
             value: country.countryInfo.iso2,
           }));
-          setTableData(data);
+
+          const sortedData = sortData(data);
+
+          setTableData(sortedData);
           setcountries(countries);
         });
     };
@@ -86,8 +90,16 @@ function App() {
             cases={countryInfo.todayCases}
             total={countryInfo.cases}
           ></InfoBox>
-          <InfoBox title="Recovered" cases={countryInfo.recovered} total={countryInfo.todayRecovered}></InfoBox>
-          <InfoBox title="Deaths" cases={countryInfo.todayDeaths} total={countryInfo.deaths}></InfoBox>
+          <InfoBox 
+          title="Recovered" 
+          cases={countryInfo.todayRecovered} 
+          total={countryInfo.recovered}>
+          </InfoBox>
+          <InfoBox 
+          title="Deaths" 
+          cases={countryInfo.todayDeaths} 
+          total={countryInfo.deaths}>
+          </InfoBox>
         </div>
         <Map></Map>
       </div>

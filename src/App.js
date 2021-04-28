@@ -10,7 +10,7 @@ import "./App.css";
 import InfoBox from "./InfoBox";
 import Map from "./Map";
 import Table from "./Table";
-import { sortData } from "./Util.js";
+import { sortData , prettyPrintStat} from "./Util.js";
 import LineGraph from "./LineGraphs.js";
 import "leaflet/dist/leaflet.css"
 
@@ -22,7 +22,9 @@ function App() {
   const [countryInfo, setCountryInfo] = useState({});
   const [tableData, setTableData] = useState([]);
   const [mapCenter, setMapCenter] = useState({ lat: 34.80746, lng: -40.4796 });
+  const [casesType, setCasesType] = useState("cases");
   const [mapZoom, setMapZoom] = useState(3);
+  const [mapCountries, setMapCountries] = useState([]);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -38,6 +40,7 @@ function App() {
 
           setTableData(sortedData);
           setcountries(countries);
+          setMapCountries(data);
         });
     };
     getCountriesData();
@@ -93,21 +96,21 @@ function App() {
         <div className="app__stats">
           <InfoBox
             title="corona virus cases"
-            cases={countryInfo.todayCases}
-            total={countryInfo.cases}
+            cases={prettyPrintStat(countryInfo.todayCases)}
+            total={prettyPrintStat(countryInfo.cases)}
           ></InfoBox>
           <InfoBox
             title="Recovered"
-            cases={countryInfo.todayRecovered}
-            total={countryInfo.recovered}
+            cases={prettyPrintStat(countryInfo.todayRecovered)}
+            total={prettyPrintStat(countryInfo.recovered)}
           ></InfoBox>
           <InfoBox
             title="Deaths"
-            cases={countryInfo.todayDeaths}
-            total={countryInfo.deaths}
+            cases={prettyPrintStat(countryInfo.todayDeaths)}
+            total={prettyPrintStat(countryInfo.deaths)}
           ></InfoBox>
         </div>
-        <Map center={mapCenter} zoom={mapZoom}></Map>
+        <Map  countries={mapCountries} casesType={casesType} center={mapCenter} zoom={mapZoom}></Map>
       </div>
       <div className="app__right">
         <Card>
